@@ -43,6 +43,11 @@ releaseProcess := Seq[ReleaseStep](
   commitNextVersion
 )
 
+val noPublish = Seq(
+  (publish / skip) := true,
+  publishArtifact  := false
+)
+
 lazy val root = (project in file("."))
   .settings(name := "h3-spark")
 
@@ -51,7 +56,8 @@ lazy val benchmarks = (project in file("benchmarks"))
     name := "h3-spark-benchmarks",
     libraryDependencies ++= Seq(
       "org.openjdk.jmh" % "jmh-generator-annprocess" % "1.37" // required for jmh IDEA plugin. Make sure this version matches sbt-jmh version!
-    )
+    ),
+    noPublish
   )
   .dependsOn(root)
   .enablePlugins(JmhPlugin)
