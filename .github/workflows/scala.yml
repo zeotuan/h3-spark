@@ -30,6 +30,8 @@ jobs:
     - run: sbt scalafmtSbtCheck scalafmtCheckAll
     - run: sbt "scalafixAll --check"
     - run: sbt headerCheck
+    - name: Run Benchmarks
+      run: sbt benchmarks/Jmh/run
     - name: Cleanup before cache
       shell: bash
       run: |
