@@ -43,13 +43,14 @@ releaseProcess := Seq[ReleaseStep](
   commitNextVersion
 )
 
-val noPublish = Seq(
-  (publish / skip) := true,
-  publishArtifact  := false
-)
+val noPublish = Seq((publish / skip) := true, publishArtifact := false)
 
 lazy val root = (project in file("."))
   .settings(name := "h3-spark")
+
+lazy val core = (project in file("src"))
+  .settings(name := "h3-spark")
+  .settings(noPublish)
 
 lazy val benchmarks = (project in file("benchmarks"))
   .settings(
@@ -59,7 +60,7 @@ lazy val benchmarks = (project in file("benchmarks"))
     ),
     noPublish
   )
-  .dependsOn(root)
+  .dependsOn(core)
   .enablePlugins(JmhPlugin)
 
 val sparkVersion = "3.5.2"
